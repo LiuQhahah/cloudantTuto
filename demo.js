@@ -37,14 +37,8 @@ db.find({selector:{deviceId:'IoT2040'}}, function(er, result) {
   //document.write("Found documents with name IoT2040"+ result.docs.length);
   console.log('Found %s documents with name IoT2040', result.docs.length);
 
-
-
   var flag =true;
   if (flag) {
-
-
-
-
     for(var i = 0;i<result.docs.length;i++){
       //累加输入到文件中
       fs.appendFile('temp.txt',i+":"+result.docs[i].payload.temp+"\n",function(err){
