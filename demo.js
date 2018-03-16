@@ -26,7 +26,7 @@ console.log('successfully deleted temp.txt');
 
 function readData(){
 db = cloudant.db.use(dbname);
-db.find({selector:{deviceId:'IoT2040'}}, function(er, result) {
+db.find({selector:{deviceId:'IoT2040'},limit:10}, function(er, result) {
 
   if (er) {
     throw er;
@@ -41,7 +41,7 @@ db.find({selector:{deviceId:'IoT2040'}}, function(er, result) {
   if (flag) {
     for(var i = 0;i<result.docs.length;i++){
       //累加输入到文件中
-      fs.appendFile('temp.txt',i+":"+result.docs[i].payload.temp+"\n",function(err){
+      fs.appendFile('temp.txt',i+":"+result.docs[i].payload.d.temp+"\n",function(err){
              if(err) throw err;
          });
     }
@@ -55,7 +55,7 @@ db.find({selector:{deviceId:'IoT2040'}}, function(er, result) {
   docs_length = result.docs.length;
   console.log("docs_length: %s",docs_length);
   //document.write('Doc temp: '+result.docs[i].payload.temp);
-  //console.log('  Doc temp: %s', result.docs[result.docs.length-1].payload.temp);
+  console.log('  Doc temp: %s', result.docs[result.docs.length-1].payload.d.temp);
       // console.log('  Doc humidity: %s', result.docs[i].payload.humidity);
       // console.log('  Doc longitude: %s', result.docs[i].payload.longitude);
       // console.log('  Doc latitude: %s', result.docs[i].payload.latitude);
