@@ -25,8 +25,8 @@ function send404Response(response){
 
 
 app.get('/pin13',function(req,res){
-  db = cloudant.db.use('d13');
-  db.find({selector:{topic:'13'},limit :1}, function(er, result) {
+  db = cloudant.db.use('pin13');
+  db.find({selector:{},limit :1}, function(er, result) {
     console.log(JSON.stringify(result));
     var pin13 = result.docs[0].payload;
     console.log("pin13 "+pin13);
