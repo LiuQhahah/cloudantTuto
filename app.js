@@ -23,16 +23,33 @@ function send404Response(response){
   response.end();
 }
 
-app.get('/',function(req,res){
 
-
-  db = cloudant.db.use(dbname);
-  db.find({selector:{deviceId:'IoT2040'},limit :1}, function(er, result) {
+app.get('/pin13',function(req,res){
+  db = cloudant.db.use('d13');
+  db.find({selector:{topic:'13'},limit :1}, function(er, result) {
     console.log(JSON.stringify(result));
-    res.render('index',{data:result});
+    var pin13 = result.docs[0].payload;
+    console.log("pin13 "+pin13);
+    res.render('pin13',{data:pin13});
   });
 
 });
+app.get('/',function(req,res){
+  db = cloudant.db.use(dbname);
+  db.find({selector:{deviceId:'IoT2040'},limit :1}, function(er, result) {
+    console.log(JSON.stringify(result));
+
+    var temp = result.docs[0].payload.d.temp;
+    var humidity  =  result.docs[0].payload.d.humidity;
+    var data = [temp,humidity];
+    console.log("temp： "+temp+" , humidity: "+humidity);
+    res.render('index',{data:data});
+  });
+
+});
+
+
+
 
 app.listen(3000);
 console.log("Read data ....");

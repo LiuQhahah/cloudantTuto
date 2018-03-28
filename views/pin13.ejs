@@ -9,19 +9,15 @@
     <p>You wont find a website better anywhere else!</p>
 
     <form id = "contact-form">
-      <label for = "Who">温度</label>
-      <input type="text" name = "who" value="<%= data[0] %>">
-      <label for="department">湿度</label>
-      <input type="text" name="department" value="<%= data[1] %>">
+      <label for = "Who">Pin13</label>
+      <input type="text" name = "who" value="<%= data %>">
+      <label for="department">Pin13</label>
+      <input type="text" name="department" value="<%= data %>">
       <label for="email">Your email</label>
       <input type="email" name="email"/>
       <input type="submit" value="submit"/>
     </form>
 
-    <ul>
-      <% data.forEach(function(item){%>
-        <li><%= item %></li>
-      <%});%>
-    </ul>
+
   </body>
 </html>
