@@ -48,6 +48,72 @@ app.get('/',function(req,res){
 
 });
 
+//get data from data "new2040"
+app.get('/iot2040',function(req,res){
+
+  db = cloudant.db.use('new2040');
+
+  //get time
+  // var time = [];
+  // var real_temp;
+  var data = {time:[],history_temp:[],real_temp:0};
+  db.find({selector:{"time":{"topic":"time"}},limit : 5},function(err,result){
+    if (err) {
+        return res.send();
+    }
+    console.log(JSON.stringify(result));
+    for(i=0;i<result.docs.length;i++){
+      data.time[i] = result.docs[i].time.payload;
+      console.log(data.time[i]);
+    }
+    //res.render('iot2040',{time:time});
+
+  });
+
+  //get real temp
+
+  db.find({selector:{"temp":{"topic":"temp"}},limit :1},function(err,result){
+    if (err) {
+        return res.send();
+    }
+    console.log(JSON.stringify(result));
+    data.real_temp = result.docs[0].temp.payload;
+    // for (var i = 0; i < result.docs.length; i++) {
+    //   real_temp[i] = result.docs[i].temp.payload;
+    //   console.log(real_temp[i]);
+    // }
+    console.log(data.real_temp);
+  //res.render('iot2040',{real_temp:real_temp});
+  });
+
+
+  //get history temp
+  //var history_temp = [];
+  db.find({selector:{"temp":{"topic":"temp"}},limit :5},function(err,result){
+    if (err) {
+        return res.send();
+    }
+    console.log(JSON.stringify(result));
+    for (var i = 0; i < result.docs.length; i++) {
+      data.history_temp[i] = result.docs[i].temp.payload;
+      console.log(data.history_temp[i]);
+    }
+
+    res.render('iot2040',{data:data});
+  });
+
+
+
+// res.render('iot2040',{
+//   time: time,
+//   // real_temp: real_temp,
+//   // history_temp:history_temp
+// });
+
+//res.json({time:time,history_temp:history_temp,real_temp:real_temp});
+
+});
+
 
 
 
