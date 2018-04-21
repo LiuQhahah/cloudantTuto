@@ -17,18 +17,20 @@
     <p>You wont find a website better anywhere else!</p>
 
     <ul>
-      <% data.time.forEach(function(item){%>
+      <% data.humidity_data.forEach(function(item){%>
         <li><%= item %></li>
       <%});%>
     </ul>
     <form id = "contact-form">
       <label for = "Who">温度</label>
-      <input type="text" name = "who" value="<%= data.real_temp %>">
+      <input type="text" name = "who" value="<%= data.history_temp[0] %>">
+      <label for = "Who">时间</label>
+      <input type="text" name = "who" value="<%= data.temp_data[0] %>">
       <label for="department">湿度</label>
-      <input type="text" name="department" value="<%= data.real_humidity %>">
-      <label for="email">Your email</label>
-      <input type="email" name="email"/>
-      <input type="submit" value="submit"/>
+      <input type="text" name="department" value="<%= data.history_humidity[0] %>">
+      <label for = "Who">时间</label>
+      <input type="text" name = "who" value="<%= data.humidity_data[0] %>">
+
     </form>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <!-- <script>
@@ -72,7 +74,7 @@ $.getJSON('/iot2040',function(data){
   var dom = document.getElementById("container");
   var myChart = echarts.init(dom);
   var app = {};
-  var time = <%- JSON.stringify(data.time)%>;
+  var time = <%- JSON.stringify(data.temp_data)%>;
 
 
 
@@ -122,7 +124,7 @@ $.getJSON('/iot2040',function(data){
   var dom = document.getElementById("humidity");
   var myChart = echarts.init(dom);
   var app = {};
-  var time = <%- JSON.stringify(data.time)%>;
+  var time = <%- JSON.stringify(data.humidity_data)%>;
 
 
 
@@ -152,5 +154,107 @@ $.getJSON('/iot2040',function(data){
       myChart.setOption(option, true);
   }
          </script>
+
+
+       </script> -->
+              <div id="container" style="width: 600px;height:400px;"></div>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+              <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+
+              <script type="text/javascript">
+
+
+
+       var dom = document.getElementById("container");
+       var myChart = echarts.init(dom);
+       var app = {};
+       var time = <%- JSON.stringify(data.temp_data)%>;
+
+
+
+
+
+       option = null;
+       option = {
+           xAxis: {
+               type: 'category',
+               data:time
+
+           },
+           yAxis: {
+               type: 'value'
+           },
+           series: [{
+               data: [<%=data.history_temp %>],
+               type: 'line'
+           }],
+           title: {
+            left: 'center',
+            text: '历史温度',
+        }
+       };
+
+       if (option && typeof option === "object") {
+           myChart.setOption(option, true);
+       }
+              </script>
+
+              <div id="status" style="width: 600px;height:400px;"></div>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+              <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+              <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+
+              <script type="text/javascript">
+
+
+
+       var dom = document.getElementById("status");
+       var myChart = echarts.init(dom);
+       var app = {};
+       var time = <%- JSON.stringify(data.status_data)%>;
+
+
+
+
+
+       option = null;
+       option = {
+           xAxis: {
+               type: 'category',
+               data:time
+
+           },
+           yAxis: {
+               type: 'value'
+           },
+           series: [{
+               data: [<%=data.status %>],
+               type: 'line'
+           }],
+           title: {
+            left: 'center',
+            text: 'pin13 状态',
+        }
+       };
+
+       if (option && typeof option === "object") {
+           myChart.setOption(option, true);
+       }
+              </script>
      </body>
 </html>
