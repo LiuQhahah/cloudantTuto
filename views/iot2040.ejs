@@ -4,7 +4,7 @@
     <link href="/assets/styles.css" rel = "stylesheet" type="text/css"/>
     <link rel="FaviconIcon" href="favicon.ico" type="assets/nodejs">
 
-    <meta charset="utf-8" http-equiv="refresh" content="20">
+    <meta charset="utf-8" http-equiv="refresh" content="5">
     <title>IoT2040</title>
     <!-- 引入 echarts.js -->
      <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
@@ -13,7 +13,7 @@
 
   <body style="height: 100%; margin: 0">
 
-    <h1>基于云平台的工业物联网设备检测系统</h1>
+    <h1>基于云平台的工业物联网设备监测系统</h1>
     <br></br>
 
     <!-- <ul>
@@ -26,6 +26,7 @@
       <input type="text" name = "who" value="<%= data.history_temp[0] %>">
       <label for = "Who">时间</label>
       <input type="text" name = "who" value="<%= data.temp_data[0] %>">
+      <br></br>
       <label for="department">湿度</label>
       <input type="text" name="department" value="<%= data.history_humidity[0] %>">
       <label for = "Who">时间</label>
@@ -33,28 +34,7 @@
 
     </form>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<!-- <script>
 
-$.getJSON('/iot2040',function(data){
-    //regex time
-  const regex = /^[0-9]{4}\-(?:0[1-9]|1[0-2])\-(?:0[1-9]|[1-2][0-9]|3[0-1])\s+(?:2[0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]$/gm;
-  var time = <%- JSON.stringify(data.time)%>;
-  let m;
-
-  while ((m = regex.exec(time)) !== null) {
-      // This is necessary to avoid infinite loops with zero-width matches
-      if (m.index === regex.lastIndex) {
-          regex.lastIndex++;
-      }
-
-      // The result can be accessed through the `m`-variable.
-      m.forEach((match, groupIndex) => {
-          console.log(`Found match, group ${groupIndex}: ${match}`);
-      });
-  }
-});
-
-  </script> -->
       <br></br>
           <br></br>
 
@@ -79,19 +59,18 @@ $.getJSON('/iot2040',function(data){
         var app = {};
         var time = <%- JSON.stringify(data.temp_data)%>;
 
-
-
-
-
         option = null;
         option = {
             xAxis: {
                 type: 'category',
                 data:time
-
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                name: '温度',
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
             },
             series: [{
                 data: [<%=data.history_temp %>],
@@ -118,8 +97,6 @@ $.getJSON('/iot2040',function(data){
          <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
          <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
          <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
-
-
          <script type="text/javascript">
 
 
@@ -129,19 +106,18 @@ $.getJSON('/iot2040',function(data){
           var app = {};
           var time = <%- JSON.stringify(data.humidity_data)%>;
 
-
-
-
-
           option = null;
           option = {
               xAxis: {
                   type: 'category',
                   data:time
-
               },
               yAxis: {
-                  type: 'value'
+                  type: 'value',
+                  name: '湿度',
+                  axisLabel: {
+                      formatter: '{value} %'
+                  }
               },
               series: [{
                   data: [<%=data.history_humidity %>],
@@ -150,6 +126,7 @@ $.getJSON('/iot2040',function(data){
               title: {
                left: 'center',
                text: '历史湿度',
+
            }
           };
 
@@ -162,7 +139,7 @@ $.getJSON('/iot2040',function(data){
 
 
 
-         <div id="status" style="width: 300px;height:200px;"></div>
+         <div id="status" style="width: 600px;height:400px;"></div>
                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
@@ -203,7 +180,7 @@ $.getJSON('/iot2040',function(data){
 
 
                 {
-                    name:'Step End',
+                    name:'LED灯状态',
                     type:'line',
                     step: 'end',
                     data:[<%=data.status %>]
@@ -218,6 +195,6 @@ $.getJSON('/iot2040',function(data){
 
 
 
-          
+
      </body>
 </html>
