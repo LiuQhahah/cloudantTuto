@@ -1,27 +1,240 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link href="/assets/styles.css" rel = "stylesheet" type="text/css"/>
-  </head>
-  <body>
 
-    <h1>Contact Me</h1>
-    <p>You wont find a website better anywhere else!</p>
+<head>
+    <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+    <link rel="FaviconIcon" href="favicon.ico" type="assets/nodejs">
 
-    <form id = "contact-form">
-      <label for = "Who">温度</label>
-      <input type="text" name = "who" value="<%= data[0] %>">
-      <label for="department">湿度</label>
-      <input type="text" name="department" value="<%= data[1] %>">
-      <label for="email">Your email</label>
-      <input type="email" name="email"/>
-      <input type="submit" value="submit"/>
+    <meta charset="utf-8" http-equiv="refresh" >
+    <title>IoT2040</title>
+    <!-- 引入 echarts.js -->
+    <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+
+    <style type="text/css" rel="stylesheet">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "lucida grande", "lucida sans unicode",
+            lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+        }
+
+      
+    </style>
+</head>
+
+
+<body style="height: 100%; margin: 0">
+
+    <h1>基于云平台的工业物联网设备监测系统</h1>
+    <br></br>
+
+    
+    <form id="contact-form" style="background-color: black">
+        <label for="Who">温度</label>
+        <input type="text" name="who" value="<%= data.history_temp[0] %>">
+        <label for="Who">时间</label>
+        <input type="text" name="who" value="<%= data.temp_data[0] %>">
+        <br></br>
+        <label for="department">湿度</label>
+        <input type="text" name="department" value="<%= data.history_humidity[0] %>">
+        <label for="Who">时间</label>
+        <input type="text" name="who" value="<%= data.humidity_data[0] %>">
+
     </form>
+    <br>
 
-    <ul>
-      <% data.forEach(function(item){%>
-        <li><%= item %></li>
-      <%});%>
-    </ul>
-  </body>
+    <div id="test" style="width: 100px height: 200px;"></div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://127.0.0.1:3000/index',
+            dataType: "jsonp",
+            jsonpCallback: "_testcb",
+            cache: false,
+            timeout: 5000,
+            success: function(data) {
+                $("#test").append(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('error ' + textStatus + " " + errorThrown);
+            }
+        });
+    });
+</script>
+       
+            <div id="container" style="background-color: green; height: 300px;width: 400px;">
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+                <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+                <script type="text/javascript">
+                    var dom = document.getElementById("container");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    var time = <%- JSON.stringify(data.temp_data) %>;
+
+                    option = null;
+                    option = {
+                        xAxis: {
+                            type: 'category',
+                            data: time
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '温度',
+                            axisLabel: {
+                                formatter: '{value} °C'
+                            }
+                        },
+                        series: [{
+                            data: [<%=data.history_temp %>],
+                            type: 'line'
+                        }],
+                        title: {
+                            left: 'center',
+                            text: '历史温度',
+                        }
+                    };
+
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                </script>
+            </div>
+          
+
+            <br>
+
+            <div class="panel_item">
+
+            <div id="humidity" style="background-color: orange; height: 300px;width: 400px">
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+                <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+                <script type="text/javascript">
+
+                    var dom = document.getElementById("humidity");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    var time = <%- JSON.stringify(data.humidity_data) %>;
+
+                    option = null;
+                    option = {
+                        xAxis: {
+                            type: 'category',
+                            data: time
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '湿度',
+                            axisLabel: {
+                                formatter: '{value} %'
+                            }
+                        },
+                        series: [{
+                            data: [<%- data.history_humidity %>],
+                            type: 'line'
+                        }],
+                        title: {
+                            left: 'center',
+                            text: '历史湿度',
+
+                        }
+                    };
+
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                </script>
+
+            </div>
+       
+
+    <br>
+
+       
+            <div id="status" style="background: pink; height: 300px;width: 400px">
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+                <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+                <script type="text/javascript">
+                    var dom = document.getElementById("status");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    option = null;
+                    option = {
+                        title: {
+                            text: 'pin13 状态'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+
+                        xAxis: {
+                            type: 'category',
+                            data: <%- JSON.stringify(data.status_data) %>
+                    },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+
+
+                            {
+                                name: 'LED灯状态',
+                                type: 'line',
+                                step: 'end',
+                                data: [<%=data.status %>]
+                            }
+                        ]
+                    };
+
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                </script>
+            </div>
+
+        <br>
+            <!-- mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 640x480 -f 30 " -o "output_http.so -p 8090" -->
+            
+                <img src="http://127.0.0.1:8090/?action=stream" style="width: 400px;height: 300px;">
+            
+
+        
+
+</body>
+
 </html>
