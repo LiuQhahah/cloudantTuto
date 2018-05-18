@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 
 <head>
     <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
@@ -7,10 +7,8 @@
 
     <meta charset="utf-8" http-equiv="refresh">
     <title>IoT2040</title>
-    <!-- 引入 echarts.js -->
-    <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
-
-    <style type="text/css" rel="stylesheet">
+ 
+    <style type="text/css" rel="stylesheet" >
         html,
         body {
             width: 100%;
@@ -19,6 +17,18 @@
             padding: 0;
             font-family: "lucida grande", "lucida sans unicode",
             lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+        }
+        .parent-fix{
+            margin-left: -20px;
+        }
+        .parent{
+            display: table;
+            
+            table-layout: fixed;
+        }
+        .column{
+            display: table-cell;
+            padding-left: 20px;
         }
     </style>
 </head>
@@ -55,8 +65,9 @@
     <br>
 
 
-
-    <div id="container" style="background-color: green; height: 300px;width: 400px;">
+    <div class="parent-fix">
+        <dic class="parent">
+    <div id="container" class="column" style="background-color: green; height: 300px;width: 400px;">
         <script type="text/javascript">
 
  
@@ -100,9 +111,8 @@
 
     <br>
 
-    <div class="panel_item">
 
-        <div id="humidity" style="background-color: orange; height: 300px;width: 400px">
+        <div id="humidity" class="column" style="background-color: orange; height: 300px;width: 400px">
             <script type="text/javascript">
 
                 var dom = document.getElementById("humidity");
@@ -140,12 +150,12 @@
             </script>
 
         </div>
-
+     
 
         <br>
 
 
-        <div id="status" style="background: pink; height: 300px;width: 400px">
+        <div id="status" class="column" style="background: pink; height: 300px;width: 400px">
 
             <script type="text/javascript">
                 var dom = document.getElementById("status");
@@ -191,6 +201,8 @@
                 }
             </script>
         </div>
+    </div>
+</div>
 
         <br>
         <!-- mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 640x480 -f 30 " -o "output_http.so -p 8090" -->
