@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+    <link href="/public/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="FaviconIcon" href="favicon.ico" type="assets/nodejs">
+
+    <meta charset="utf-8" http-equiv="refresh">
+    <title>IoT2040</title>
+ 
+ 
+</head>
+<body>
+  <div class="container-fluid">
+      <div class="row">
+          <!-- 侧边栏 -->
+          <div class="sidebar">
+              <h4>博客管理系统(四月)</h4>
+              <div class="cover">
+                  <h2><img class="img-circle" src="images/icon_face.jpg"/></h2>
+                  <b>Hi~ 小主</b>
+                  <p>超级管理员</p>
+              </div>
+              <ul class="sidenav animated fadeInUp">
+                  <li><a class="withripple" href=""><i class="icon icon-home"></i><span class="sidespan">首页</span></a></li>
+                  <li><a class="withripple hover" href="javascript:;"><i class="icon icon-article"></i><span class="sidespan">文章管理</span><i class="iright pull-right">&gt;</i></a>
+                      <ul class="sidebar-dropdown">
+                          <li><a href="list.html" class="withripple" target="myframe">文章列表</a></li>
+                          <li><a href="add.html" class="withripple" target="myframe">添加文章</a></li>
+                      </ul>
+                  </li>
+                  <li><a class="withripple" href="javascript:;"><i class="icon icon-ui"></i><span class="sidespan">UI设计</span><i class="iright pull-right">&gt;</i></a>
+                      <ul class="sidebar-dropdown">
+                          <li><a href="" class="withripple">UI设计列表</a></li>
+                          <li><a href="" class="withripple">添加作品</a></li>
+                      </ul>
+                  </li>
+                  <li><a class="withripple" href="javascript:;"><i class="icon icon-web"></i><span class="sidespan">WEB前端</span><i class="iright pull-right">&gt;</i></a>
+                      <ul class="sidebar-dropdown">
+                          <li><a href="" class="withripple">文章列表</a></li>
+                          <li><a href="" class="withripple">添加WEB作品</a></li>
+                      </ul>
+                  </li>
+                  <li><a class="withripple" href="javascript:;"><i class="icon icon-php"></i><span class="sidespan">PHP后台</span><i class="iright pull-right">&gt;</i></a>
+                      <ul class="sidebar-dropdown">
+                          <li><a href="" class="withripple">PHP项目</a></li>
+                          <li><a href="" class="withripple">添加项目</a></li>
+                      </ul>
+                  </li>
+              </ul>
+
+
+              <script type="text/javascript">
+              /* 侧边栏切换形态 */
+              $(".navbar-side a").click(function(){
+                  $("body").toggleClass("sidebar-collapse");
+                  if($("body").hasClass("sidebar-collapse")){
+                      $(".sidebar > h4").html("博客");
+                  }else{
+                      $(".sidebar > h4").html("博客管理系统(四月)");
+                  }
+                  return false;
+              })
+
+              $(".sidenav>li>a").click(function(){
+                  $(this).addClass("hover");
+                  $(this).next().slideToggle();
+                  $(this).parent().siblings().children("a").removeClass("hover").next().slideUp();
+
+              })
+                </script>
+          </div>
+          <!-- 侧边栏 完-->
+  <!-- 主体部分  -->
+          <div class="main">    主体部分的内容</div>
+
+
+  </body>
+  </html>
